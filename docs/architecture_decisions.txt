@@ -1,0 +1,9 @@
+First, I want to mention the assumptions I am making here. Because the location and person post/get apis are not used in the Udaconnect app itself, I am assuming that the expected data inflow would be
+through an API rather than the app interface. As a result, I didn't change most to gRPC because APIs are a current standard for working with external applications. It is much more easier for the outside
+parties to integrate and send the data through an API rather than the gRPC technology. There are three main reasons why: 1. gRPC is a relatively new technology and it is not adopted by everyone.
+2. API is a guideline and it is flexible so the outside party doesn't have to know struct types of data they need to send to us. 3. Setting up sending to an API and testing the endpoint via Postman is easy.
+
+Since we are expecting a big inflow of data, I've added Kafka queue to Location Post and Person Post APIs in order to avoid the API overload. The Kafka queue will ensure the data won't be lost on the way to us and make the requests asynchronous.
+
+The only two endpoints where I implemented gRPC is the Retrieve All Persons and Connection endpoints. Those two endpoints are currently in use by Udaconnect app so we can bring in gRPC to improve the
+app performance and it would be easier for us to implement gRPC since everything is done internally. In case the endpoint is also used by outside parties, we can add the API here as well.
