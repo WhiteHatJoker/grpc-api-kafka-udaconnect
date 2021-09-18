@@ -31,7 +31,7 @@ spec:
         service: udaconnect-location-api
     spec:
       containers:
-      - image: udacity/nd064-udaconnect-api:latest
+      - image: rkhudoyberdiev/location-api:latest
         name: udaconnect-location-api
         imagePullPolicy: Always
         env:
