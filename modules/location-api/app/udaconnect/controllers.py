@@ -1,15 +1,15 @@
 from app.udaconnect.models import Location
 from app.udaconnect.schemas import (
-    LocationSchema,
+    LocationSchema
 )
 from app.udaconnect.services import LocationService
-from flask import request
+from flask import request,jsonify
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 
 DATE_FORMAT = "%Y-%m-%d"
 
-api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
+api = Namespace("UdaConnect", description="Udaconnect Location API")  # noqa
 
 
 # TODO: This needs better exception handling
