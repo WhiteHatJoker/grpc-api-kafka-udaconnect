@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: udaconnect-location-consumer-grpc
-  name: udaconnect-location-consumer-grpc
+    service: location-producer-grpc
+  name: location-producer-grpc
 spec:
   ports:
   - name: "5000"
@@ -11,28 +11,28 @@ spec:
     targetPort: 5000
     nodePort: 30003
   selector:
-    service: udaconnect-location-consumer-grpc
+    service: location-producer-grpc
   type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: udaconnect-location-consumer-grpc
-  name: udaconnect-location-consumer-grpc
+    service: location-producer-grpc
+  name: location-producer-grpc
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: udaconnect-location-consumer-grpc
+      service: location-producer-grpc
   template:
     metadata:
       labels:
-        service: udaconnect-location-consumer-grpc
+        service: location-producer-grpc
     spec:
       containers:
       - image: rkhudoyberdiev/location-producer-grpc:latest
-        name: udaconnect-location-consumer-grpc
+        name: location-producer-grpc
         imagePullPolicy: Always
         env:
         - name: DB_USERNAME
