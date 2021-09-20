@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8.0
 
 WORKDIR .
 
@@ -9,4 +9,4 @@ EXPOSE 5000
 
 COPY . .
 
-ENTRYPOINT [ "python", "app/grpc-location-server.py" ]
+ENTRYPOINT [ "python", "app/location-consumer.py" ]
