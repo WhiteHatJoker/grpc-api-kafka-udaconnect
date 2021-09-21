@@ -17,7 +17,6 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 
 
 
-# This is to do with grpc since internal mostly (maybe api as well)
 @api.route("/persons")
 class PersonsResource(Resource):
     @accepts(schema=PersonSchema)
@@ -27,13 +26,11 @@ class PersonsResource(Resource):
         new_person: Person = PersonService.create(payload)
         return new_person
 
-# api and kafka since external and will receive an inflow
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
         persons: List[Person] = PersonService.retrieve_all()
         return persons
 
-# leave as api
 @api.route("/persons/<person_id>")
 @api.param("person_id", "Unique ID for a given Person", _in="query")
 class PersonResource(Resource):
@@ -42,7 +39,6 @@ class PersonResource(Resource):
         person: Person = PersonService.retrieve(person_id)
         return person
 
-# This is to do with grpc since internal mostly (maybe api as well)
 @api.route("/persons/<person_id>/connection")
 @api.param("start_date", "Lower bound of date range", _in="query")
 @api.param("end_date", "Upper bound of date range", _in="query")
