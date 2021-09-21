@@ -28,4 +28,3 @@ print("Sending second location...")
 stub.Create(location2)
 
 print("Finished")
-
