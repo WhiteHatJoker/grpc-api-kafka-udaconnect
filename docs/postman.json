@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "5da37613-d852-4fa0-9573-237f38b30e10",
+		"name": "UdaConnect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Persons",
+			"item": [
+				{
+					"name": "Get all persons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{person-api}}/persons",
+							"host": [
+								"{{person-api}}"
+							],
+							"path": [
+								"persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific person",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{person-api}}/persons/5",
+							"host": [
+								"{{person-api}}"
+							],
+							"path": [
+								"persons",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a person",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\":\"Ron\",\n    \"last_name\":\"Accme\",\n    \"company_name\":\"New\"\n}"
+						},
+						"url": {
+							"raw": "{{person-api}}/persons",
+							"host": [
+								"{{person-api}}"
+							],
+							"path": [
+								"persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find a connection of a specific person",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{person-api}}/persons/5/connection?start_date=2020-08-15&end_date=2021-08-07&distance=1",
+							"host": [
+								"{{person-api}}"
+							],
+							"path": [
+								"persons",
+								"5",
+								"connection"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2020-08-15"
+								},
+								{
+									"key": "end_date",
+									"value": "2021-08-07"
+								},
+								{
+									"key": "distance",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locations",
+			"item": [
+				{
+					"name": "Get a specific location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{location-api}}/locations/29",
+							"host": [
+								"{{location-api}}"
+							],
+							"path": [
+								"locations",
+								"29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a location",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"person_id\":1,\n    \"latitude\": \"-122.290524\",\n    \"longitude\": \"37.553441\",\n    \"creation_time\": \"2020-08-15 10:37:06.000000\"\n}"
+						},
+						"url": {
+							"raw": "{{location-api}}/locations",
+							"host": [
+								"{{location-api}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all locations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"person_id\":1,\n    \"latitude\": \"-122.290524\",\n    \"longitude\": \"37.553441\",\n    \"creation_time\": \"2020-08-15 10:37:06.000000\"\n}"
+						},
+						"url": {
+							"raw": "{{location-api}}/locations",
+							"host": [
+								"{{location-api}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "location-api",
+			"value": "http://localhost:30002/api"
+		},
+		{
+			"key": "person-api",
+			"value": "http://localhost:30001/api"
+		}
+	]
+}
