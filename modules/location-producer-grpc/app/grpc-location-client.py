@@ -12,20 +12,20 @@ stub = location_pb2_grpc.LocationServiceStub(channel)
 
 location1 = location_pb2.LocationMessage(
     person_id="9",
-    latitude=47.0707,
-    longitude=15.4395
+    latitude=22.8888,
+    longitude=10.5432
 )
 print("Sending first location...")
 stub.Create(location1)
 
 
-# location2 = location_pb2.LocationMessage(
-#     person_id="1",
-#     latitude=37.7749,
-#     longitude=122.4194
-# )
-# print("Sending second location...")
-# stub.Create(location2)
+location2 = location_pb2.LocationMessage(
+    person_id="1",
+    latitude=32.5641,
+    longitude=109.3342
+)
+print("Sending second location...")
+stub.Create(location2)
 
 print("Finished")
 
