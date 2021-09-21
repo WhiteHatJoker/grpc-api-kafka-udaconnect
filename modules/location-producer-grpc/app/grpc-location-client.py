@@ -19,13 +19,13 @@ print("Sending first location...")
 stub.Create(location1)
 
 
-location2 = location_pb2.LocationMessage(
-    person_id="1",
-    latitude=37.7749,
-    longitude=122.4194
-)
-print("Sending second location...")
-stub.Create(location2)
+# location2 = location_pb2.LocationMessage(
+#     person_id="1",
+#     latitude=37.7749,
+#     longitude=122.4194
+# )
+# print("Sending second location...")
+# stub.Create(location2)
 
 print("Finished")
 
