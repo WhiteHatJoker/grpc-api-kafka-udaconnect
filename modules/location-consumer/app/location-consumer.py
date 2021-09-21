@@ -25,8 +25,8 @@ def save_to_db(location_data):
 
     cursor = db_conn.cursor()
     person_id = int(location_data["person_id"])
-    latitude = int(location_data["latitude"])
-    longitude = int(location_data["longitude"])
+    latitude = float(location_data["latitude"])
+    longitude = float(location_data["longitude"])
     sql = "INSERT INTO location (person_id, coordinate) VALUES ({}, ST_Point({}, {}))".format(person_id, latitude, longitude)
     cursor.execute(sql)
     db_conn.commit()
