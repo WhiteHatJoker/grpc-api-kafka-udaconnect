@@ -5,8 +5,10 @@ a big inflow of data into Locations module so it is better to seperate it out in
 To be honest, I would have left everything as an API endpoint and just added Kafka to the locations endpoint for the upcoming inflow of locations data.
 I strongly believe that APIs are a current standard for working with external applications. It is much more easier for the outside parties to integrate and send the location 
 data through an API rather than the gRPC technology. There are three main reasons why: 1. gRPC is a relatively new technology and it is not adopted by everyone.
-2. API is a guideline and it is flexible so the outside party doesn't have to know struct types of data they need to send to us. 3. Setting up sending to an API and testing the endpoint via Postman is easy.
-For the above reasons, I left an API on all endpoints except Locations.
+2. API is a guideline and it is flexible so the outside party doesn't have to know strict types of data they need to send to us. 3. Setting up sending to an API and testing the 
+endpoint via Postman is easy. Simple example is you can make API requests from the frontend js code while GRPC requires backend implementation.
+For the above reasons, I left an API on all endpoints and just introduced GRPC and Kafka to a separate Locations module.
 
 Due to the project requirements of implementing gRPC I think the locations endpoint is the most suitable candidate to use it. It will improve the performance for the upcoming load.
-Since we are expecting a big inflow of data, I've added Kafka queue to Location gRPC as well in order to avoid the overload. The Kafka queue will ensure the data won't be lost on the way to us and make the requests asynchronous.
+Since we are expecting a big inflow of data, I've added Kafka queue to Location gRPC as well in order to avoid the overload. The Kafka queue will ensure the data won't be lost on 
+the way to us and make the requests asynchronous.
