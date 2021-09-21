@@ -1,10 +1,12 @@
 import psycopg2, logging, os, json
 from kafka import KafkaConsumer
-
+from dotenv import load_dotenv
 logging.basicConfig(level=logging.INFO)
 
 KAFKA_SERVER_URL = "kafka-service:9092"
 KAFKA_TOPIC_NAME = "locations"
+
+load_dotenv()
 
 DB_NAME = os.environ["DB_NAME"]
 DB_USERNAME = os.environ["DB_USERNAME"]
@@ -23,13 +25,14 @@ def save_to_db(location_data):
 
     cursor = db_conn.cursor()
     person_id = int(location_data["person_id"])
-    latitude = int(location["latitude"])
-    longitude = int(location["longitude"])
+    latitude = int(location_data["latitude"])
+    longitude = int(location_data["longitude"])
     sql = "INSERT INTO location (person_id, coordinate) VALUES ({}, ST_Point({}, {}))".format(person_id, latitude, longitude)
     cursor.execute(sql)
     db_conn.commit()
     cursor.close()
     db_conn.close()
+
 
 
 consumer = KafkaConsumer(KAFKA_TOPIC_NAME, bootstrap_servers=[KAFKA_SERVER_URL])
