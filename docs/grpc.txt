@@ -1,0 +1,14 @@
+The following is the gRPC LocationMessage format:
+
+message LocationMessage {
+    string person_id = 1;
+    float latitude = 2;
+    float longitude = 3;
+}
+
+I've also set up a gRPC client file for testing the gRPC server. It sends two sample location messages. Here is how to use it:
+
+1. Run "kubectl get po" and note down the location-producer-grpc pod name.
+2. Run "kubectl exec --stdin --tty <pod-name-from-step-1> -- /bin/bash"
+3. Run "python app/grpc-location-client.py"
+4. You will see Finished message which means it was good with sending the messages.
