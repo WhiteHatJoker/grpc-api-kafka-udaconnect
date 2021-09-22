@@ -103,12 +103,20 @@ These pages should also load on your web browser:
 * `http://localhost:30002/` - Location OpenAPI Documentation
 * `http://localhost:30002/api/` - Base path for Location API
 
+### Verifying gRPC Works
+I've also set up a gRPC client file for testing the gRPC server. It sends two sample location messages. Here is how to use it:
+
+1. Run `kubectl get po` and note down the location-producer-grpc pod name.
+2. Run `kubectl exec --stdin --tty <pod-name-from-step-1> -- /bin/bash`
+3. Run `python app/grpc-location-client.py`
+4. You will see Finished message which means it was good with sending the messages.
+
 #### Deployment Note
 You may notice the odd port numbers being served to `localhost`. [By default, Kubernetes services are only exposed to one another in an internal network](https://kubernetes.io/docs/concepts/services-networking/service/). This means that `udaconnect-frontend-app` and `udaconnect-person-api` can talk to one another. For us to connect to the cluster as an "outsider", we need to a way to expose these services to `localhost`.
 
 Connections to the Kubernetes services have been set up through a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport). (While we would use a technology like an [Ingress Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) to expose our Kubernetes services in deployment, a NodePort will suffice for development.)
 
-## Configs and Secrets
+### Configs and Secrets
 In `deployment/db-secret.yaml`, the secret variable is `d293aW1zb3NlY3VyZQ==`. The value is simply encoded and not encrypted -- this is ***not*** secure! Anyone can decode it to see what it is.
 ```bash
 # Decodes the value into plaintext
@@ -119,7 +127,7 @@ echo "hotdogsfordinner" | base64
 ```
 This is okay for development against an exclusively local environment and we want to keep the setup simple so that you can focus on the project tasks. However, in practice we should not commit our code with secret values into our repository. A CI/CD pipeline can help prevent that.
 
-## PostgreSQL Database
+### PostgreSQL Database
 The database uses a plug-in named PostGIS that supports geographic queries. It introduces `GEOMETRY` types and functions that we leverage to calculate distance between `ST_POINT`'s which represent latitude and longitude.
 
 _You may find it helpful to be able to connect to the database_. In general, most of the database complexity is abstracted from you. The Docker container in the starter should be configured with PostGIS. Seed scripts are provided to set up the database table and some rows.
@@ -129,6 +137,11 @@ While the Kubernetes service for `postgres` is running (you can use `kubectl get
 kubectl port-forward svc/postgres 5432:5432
 ```
 This will enable you to connect to the database at `localhost`. You should then be able to connect to `postgresql://localhost:5432/geoconnections`. This is assuming you use the built-in values in the deployment config map.
+
+### Kafka + Zookeper
+
+The kafka broker and zookeper has been deployed with the help of this article [Kafka on Kubernetes Deployment Best Practices](https://www.magalix.com/blog/kafka-on-kubernetes-and-deploying-best-practice)
+
 ### Software
 To manually connect to the database, you will need software compatible with PostgreSQL.
 * CLI users will find [psql](http://postgresguide.com/utilities/psql.html) to be the industry standard.
@@ -137,8 +150,6 @@ To manually connect to the database, you will need software compatible with Post
 ## Architecture Diagrams
 Your architecture diagram should focus on the services and how they talk to one another. For our project, we want the diagram in a `.png` format. Some popular free software and tools to create architecture diagrams:
 1. [Lucidchart](https://www.lucidchart.com/pages/)
-2. [Google Docs](docs.google.com) Drawings (In a Google Doc, _Insert_ - _Drawing_ - _+ New_)
-3. [Diagrams.net](https://app.diagrams.net/)
 
 ## Tips
 * We can access a running Docker container using `kubectl exec -it <pod_id> sh`. From there, we can `curl` an endpoint to debug network issues.
