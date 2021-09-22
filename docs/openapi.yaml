@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: UdaConnect API
+  version: 0.1.0
+  description: An API to store people and their locations, and find connections betweeen people.
+paths:
+  /api/persons:
+    post:
+      summary: Creates a new person
+      operationId: addPerson
+      description: Creates a new person with name and company name.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+        description: Person information
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Persons API
+    get:
+      summary: Retrieves all persons
+      operationId: getPersons
+      description: Retrieves all the persons information that have been created.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+      tags:
+        - Persons API
+  /api/persons/{person_id}:
+    get:
+      summary: Retrieves a specific person
+      operationId: getPerson
+      description: Get a specific person by passing in person's id.
+      parameters:
+        - in: path
+          description: Unique ID for a given Person
+          name: person_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Persons API
+  /api/persons/{person_id}/connection:
+    get:
+      summary: Retrieves person's potential connections
+      operationId: getPersonConnections
+      description: Find specific person's connections in terms of other people.
+      parameters:
+        - name: person_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - in: query
+          description: Proximity to a given user in meters
+          name: distance
+          schema:
+            type: string
+        - in: query
+          description: Upper bound of date range
+          name: end_date
+          schema:
+            type: string
+        - in: query
+          description: Lower bound of date range
+          name: start_date
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Persons API
+  /api/locations:
+    post:
+      summary: Creates a new location
+      operationId: addLocation
+      description: Creates a new location with location coordinates.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+        description: Person information
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Locations API
+    get:
+      summary: Retrieves all locations
+      operationId: getLocations
+      description: Retrieves all the locations information that have been created.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+      tags:
+        - Locations API
+  /api/locations/{location_id}:
+    get:
+      summary: Retrieves a specific location
+      operationId: getLocation
+      description: Get a specific location by passing in location's id.
+      parameters:
+        - in: path
+          description: Unique ID for a given location
+          name: location_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Locations API
+tags:
+  - name: Persons API
+    description: Get and Post Persons Information
+  - name: Locations API
+    description: Get and Post Locations Information
+servers:
+  - url: /
+components:
+  schemas:
+    Person:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - company_name
+      properties:
+        first_name:
+          type: string
+          example: 'Ron'
+        last_name:
+          type: string
+          example: 'Burgundi'
+        company_name:
+          type: string
+          example: 'Samsung Electronics Co'
+    Location:
+      type: object
+      required:
+        - person_id
+        - latitude
+        - longitude
+        - creation_time
+      properties:
+        person_id:
+          type: number
+          example: 1
+        latitude:
+          type: string
+          example: '-122.290524'
+        longitude:
+          type: string
+          example: '37.553441'
+        creation_time:
+          type: string
+          format: date-time
+          example: '2021-08-29T09:12:33.001Z'
